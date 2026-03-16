@@ -1,0 +1,299 @@
+
+/* 
+html5doctor.com Reset Stylesheet v1.6.1
+Last Updated: 2010-09-17
+Author: Richard Clark - http://richclarkdesign.com 
+*/
+html,
+body,
+div,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+abbr,
+address,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+var,
+b,
+i,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+summary,
+time,
+mark,
+audio,
+video,
+button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  //outline:0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+nav ul {
+  list-style: none;
+}
+nav ul li {
+  padding: 0;
+  margin: 0;
+}
+nav ul li::before {
+  display: none;
+}
+nav ul li a {
+  text-decoration: unset;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+a {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+/* change colours to suit your needs */
+ins {
+  background-color: #ff9;
+  color: #000;
+  text-decoration: none;
+}
+/* change colours to suit your needs */
+mark {
+  background-color: #ff9;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+del {
+  text-decoration: line-through;
+}
+abbr[title],
+dfn[title] {
+  border-bottom: 1px dotted;
+  cursor: help;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/* change border colour to suit your needs */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #cccccc;
+  margin: 1em 0;
+  padding: 0;
+}
+input,
+select {
+  vertical-align: middle;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  vertical-align: middle;
+  height: auto;
+  font-style: italic;
+}
+strong {
+  font-weight: bold;
+}
+
+b {
+  font-weight: bold;
+}
+
+em {
+  font-style: italic;
+}
+
+section {
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
+button {
+  background-color: unset;
+  padding: unset;
+  outline: unset;
+  border: unset;
+}
+.src-only,
+.sr-only,
+figcaption:not(.wp-element-caption) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+:focus-visible {
+  outline: 1px solid $color-primary;
+  outline-offset: 2px;
+}
+img,
+video,
+iframe {
+  max-width: 100%;
+}
+
+body {
+  font-family: $default-font-family;
+  font-weight: 400;
+  font-size: rem($text-default);
+  // .font-regular-saira();
+  margin-left: auto;
+  margin-right: auto;
+  counter-reset: ol;
+  color: $color-font;
+  background-color: $color-page-bg;
+}
+
+.screenReaderElement {
+  position: absolute;
+  left: -10000px;
+}
+
+.container {
+  @include container($container-width);
+}
+
+.container-second {
+  @include container($container-width-second);
+}
+
+// Ostatní bootstrapové kontejnery jen dostanou tvoje paddingy
+.container-fluid,
+.container-xxl,
+.container-xl,
+.container-lg,
+.container-md,
+.container-sm {
+  @include responsive-container-padding;
+}
+.container-fluid {
+  max-width: $container-width-fluid;
+}
+
+html {
+  scroll-behavior: smooth;
+
+  &.remove {
+    overflow: hidden;
+    padding-right: var(--scrollbar-width);
+    body {
+      overflow: hidden;
+    }
+  }
+
+  * {
+    @include box-sizing(border-box);
+    outline: none;
+  }
+}
+
+main{
+  min-height: 80vh;
+}

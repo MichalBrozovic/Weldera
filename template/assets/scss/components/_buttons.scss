@@ -1,0 +1,215 @@
+/**
+ * COMPONENT: .btn-custom
+ * -------------------------------------------------------
+ * S využitím mask-image pro ikony.
+ */
+
+// 1. KONFIGURACE
+// ---------------------------------------------------------
+$btn-icons: (
+  "arrow-right": "arrow-right",
+  "arrow-down": "arrow-down",
+  "plus": "plus",
+  "login": "login",
+  "logout": "logout",
+  "search": "search",
+  "filter": "filter",
+);
+
+// Pomocná funkce už vrací jen čistou cestu k jedné SVG ikoně
+@function get-icon-path($file) {
+  @return "../../images/default_icons/#{$file}.svg";
+}
+
+// 2. MIXINY (Nová logika pro masky)
+// ---------------------------------------------------------
+@mixin btn-icon-styles($base-color, $hover-color) {
+  @each $class, $file in $btn-icons {
+    &.#{$class} span::after {
+      background-color: $base-color;
+      // Použijeme tvůj mixin pro nastavení masky
+      // Parametry: url, barva, šířka, výška
+      @include icon-mask(get-icon-path($file), $base-color, 24px, 24px);
+    }
+
+    @include hover {
+      &.#{$class} span::after {
+        background-color: $hover-color;
+      }
+    }
+  }
+}
+
+// 3. HLAVNÍ KOMPONENTA
+// ---------------------------------------------------------
+.btn {
+  @include trans(0.3s);
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+  cursor: pointer;
+  text-align: center;
+  border: none;
+  font-family: $default-font-family;
+
+  span {
+    @include trans(0.3s);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 10px 24px 10px 24px;
+    border-radius: 50px;
+    font-size: rem(18);
+    line-height: em(28, 24);
+    font-weight: 700;
+    font-family: $default-font-family;
+    letter-spacing: 0;
+    margin: 0 !important;
+    width: 100%;
+
+    &::after {
+      // Základní tranzice pro barvu pozadí (ikonu)
+      @include trans(0.3s);
+      content: "";
+      display: none;
+      flex-shrink: 0; // Aby se ikona nedeformovala při dlouhém textu
+    }
+  }
+
+  // Velikosti
+  &.small {
+    span {
+      font-size: rem(20);
+      padding: 12px 28px 8px 28px;
+    }
+  }
+  &.tiny {
+    span {
+      font-size: rem(16);
+      padding: 10px 24px 6px 24px;
+      gap: 6px;
+      &::after {
+        width: 18px; // Menší ikona pro tiny
+        height: 18px;
+      }
+    }
+  }
+
+  // Zobrazení ikony u tříd z mapy
+  @each $class, $file in $btn-icons {
+    &.#{$class} {
+      span {
+        padding: 14px 32px 10px 40px;
+        &::after {
+          display: block;
+        }
+      }
+      &.small {
+        span {
+          padding: 12px 24px 8px 32px;
+        }
+      }
+      &.tiny {
+        span {
+          padding: 10px 16px 6px 24px;
+        }
+      }
+    }
+  }
+
+  // --- VARIANTY TLAČÍTEK ---
+
+  &.btn-primary {
+    span {
+      background-color: $color-secondary;
+      color: $color-primary;
+    }
+    @include hover {
+      span {
+        background-color: $color-secondary-400;
+      }
+    }
+    // Ikona bude bílá v obou stavech
+    @include btn-icon-styles($color-font-invert, $color-font-invert);
+    &.dark {
+      span {
+        background-color: $color-primary;
+        color: $color-secondary;
+      }
+      @include hover {
+        span {
+          background-color: $color-primary-600;
+        }
+      }
+    }
+  }
+
+  &.btn-secondary {
+    span {
+      border: 1px solid $color-secondary;
+      background-color: transparent;
+      color: $color-secondary;
+
+      padding: 9px 23px 9px 23px;
+    }
+    &.small {
+      span {
+        padding: 11px 28px 7px 28px;
+      }
+    }
+    &.tiny {
+      span {
+        padding: 9px 24px 5px 24px;
+      }
+    }
+    @include hover {
+      span {
+        background-color: $color-secondary;
+        color: $color-primary-400;
+      }
+    }
+    // Ikona se mění z primární na bílou
+    @include btn-icon-styles($color-primary, $color-font-invert);
+    &.white {
+      span {
+        border-color: $color-font-invert;
+        color: $color-font-invert;
+      }
+      @include hover {
+        span {
+          background-color: $color-font-invert;
+          color: $color-font;
+        }
+      }
+      @include btn-icon-styles($color-font-invert, $color-font);
+    }
+  }
+
+  &.btn-white {
+    span {
+      background-color: $color-font-invert;
+      color: $color-font;
+    }
+    @include hover {
+      span {
+        background-color: $color-font;
+        color: $color-font-invert;
+      }
+    }
+    @include btn-icon-styles($color-font, $color-font-invert);
+  }
+
+  &.btn-danger {
+    span {
+      background-color: $color-danger;
+      color: $color-font-invert;
+    }
+    @include hover {
+      span {
+        background-color: $color-danger-600;
+      }
+    }
+    @include btn-icon-styles($color-font-invert, $color-font-invert);
+  }
+}

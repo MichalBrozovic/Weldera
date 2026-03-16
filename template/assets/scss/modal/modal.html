@@ -1,0 +1,88 @@
+<div class="modal" id="">
+  <div class="modal-bg"></div>
+  <div class="modal-text">
+    <div class="close">
+      <div></div>
+      <div></div>
+    </div>
+    <div class="holder"></div>
+  </div>
+</div>
+
+<script>
+ $(document).on("click", "", function (e) {
+    e.preventDefault();
+    const modal = $(this).closest(".modal");
+    const text = modal.find(".modal-text");
+    const holder = text.find(".holder");
+
+    modal.addClass("active");
+    setTimeout(function () {
+      text.addClass("active");
+    }, 400);
+    setTimeout(function () {
+      holder.addClass("op1");
+    }, 900);
+
+    $("html").addClass("remove");
+});
+
+
+  $(document).on("click", ".bg-close", function (e) {
+    e.preventDefault();
+
+    const modal = $(document).find(".modal");
+    const text = modal.find(".modal-text");
+    const holder = text.find(".holder");
+
+    holder.removeClass("op1");
+    setTimeout(function () {
+      text.removeClass("active");
+    }, 400);
+    setTimeout(function () {
+      modal.removeClass("active");
+      $("html").removeClass("remove");
+    }, 900);
+  });
+</script>
+
+<script>
+  on("click", ".search-activator", function (e) {
+    const modal = document.querySelector(".modal-search");
+    const text = modal.querySelector(".modal-text");
+    const holder = text.querySelector(".holder");
+
+    modal.classList.add("active");
+    setTimeout(function () {
+        text.classList.add("active");
+    }, 400);
+    setTimeout(function () {
+        holder.classList.add("op1");
+    }, 900);
+
+    document.documentElement.classList.add("remove");
+});
+
+function closeModal() {
+    const modal = document.querySelector(".modal");
+    const text = modal.querySelector(".modal-text");
+    const holder = text.querySelector(".holder");
+
+    holder.classList.remove("op1");
+    setTimeout(function () {
+        text.classList.remove("active");
+    }, 400);
+    setTimeout(function () {
+        modal.classList.remove("active");
+        document.documentElement.classList.remove("remove");
+    }, 900);
+}
+
+on("click", ".bg-close", closeModal);
+on("click", ".close", closeModal);
+document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+        closeModal();
+    }
+});
+</script>

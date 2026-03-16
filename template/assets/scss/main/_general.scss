@@ -1,0 +1,471 @@
+@use "sass:map";
+@use "sass:string";
+
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  @include trans(0.3s);
+  font-family: $heading-font-family;
+  font-weight: 700;
+  position: relative;
+  margin-bottom: 10px;
+  color: $color-font-invert;
+
+  span {
+    color: $color-secondary;
+  }
+
+  &:hover a {
+    text-decoration: none;
+  }
+}
+
+h2 {
+  text-transform: uppercase;
+}
+
+// 2. Cyklus, který to reálně vygeneruje
+@each $key, $value in $typography-map {
+  @if $key == "h1" or $key == "h2" or $key == "h3" or $key == "h4" or $key == "h5" or $key == "h6" {
+    // Generuje: h1, .h1
+    #{$key},
+    .#{$key} {
+      @include apply-typography($key);
+    }
+  } @else {
+    // Používáme moderní string.slice místo str-slice
+    $tag: string.slice($key, 1, 2); // h3
+    $modifier: string.slice($key, 4); // mid
+
+    // Cílíme na tag s třídou (h3.mid) a třídu s modifikátorem (.h3.mid)
+    #{$tag}.#{$modifier},
+    .#{$tag}.#{$modifier} {
+      @include apply-typography($key);
+    }
+  }
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  gap: 12px;
+  li {
+    list-style: none;
+    position: relative;
+    padding-left: 16px;
+    font-size: remMM(16);
+    line-height: emMM(24, 16);
+    margin-bottom: 0px;
+
+    &::before {
+      content: "";
+      left: 0px;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      display: block;
+      position: absolute;
+      background-color: $color-font;
+      border-radius: 50%;
+    }
+
+    a {
+      @include inherit();
+    }
+  }
+}
+
+ol {
+  counter-reset: my-awesome-counter;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+
+  > li {
+    list-style: none;
+    position: relative;
+    padding-left: 32px;
+    font-size: remMM($text-default);
+    line-height: emMM(24, $text-default);
+    margin-bottom: 24px;
+    counter-increment: my-awesome-counter;
+
+    &:last-of-type {
+      margin: 0;
+    }
+
+    &::before {
+      content: counter(my-awesome-counter) ".";
+      left: 7px;
+      top: -1px;
+      display: block;
+      position: absolute;
+      font-weight: 700;
+    }
+
+    a {
+      @include inherit();
+    }
+
+    ul {
+      list-style: none;
+
+      li {
+        list-style: none;
+      }
+    }
+  }
+}
+
+
+.tel,
+.phone,
+.email,
+.mail,
+.time,
+.user {
+  @include trans(0.3s);
+  font-size: remMM($text-default);
+  line-height: emMM(24, $text-default);
+  font-weight: 600;
+  color: $color-font;
+  position: relative;
+  padding: 0 0 0 38px;
+  font-style: normal;
+  text-decoration: unset;
+  @media screen and (max-width: 767px) and (min-width: 0px) {
+    word-break: break-word;
+  }
+  &.big {
+    font-size: remMM(20);
+    &::before {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  &::before {
+    @include trans(0.3s);
+    content: "";
+    left: 0;
+    top: 0px;
+
+    width: 24px;
+    height: 24px;
+    display: block;
+    position: absolute;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  &::after {
+    @include trans(0.3s);
+    content: "";
+    left: 32px;
+    bottom: -2;
+    width: 100%;
+    max-width: calc(100% - 32px);
+    height: 2px;
+    display: block;
+    position: absolute;
+    background-color: $color-primary;
+    transform: scale(0, 1);
+  }
+  &:hover {
+    &::after {
+      transform: scale(1, 1);
+    }
+  }
+  &.white {
+    color: $color-font-invert;
+  }
+}
+// .user {
+//   pointer-events: none;
+//   margin-bottom: 12px;
+//   &::before {
+//     background-image: url(../images/icons/user.svg);
+//   }
+//   &.white {
+//     color: $color-font-invert;
+//     &::before {
+//       background-image: url(../images/icons/user-white.svg);
+//     }
+//   }
+// }
+// .time {
+//   &::before {
+//     background-image: url(../images/icons/time-dark.svg);
+//   }
+// }
+.tel,
+.phone {
+  &::before {
+    background-image: url(../images/icons/tel.svg);
+  }
+  // &:hover{
+  //   &::before{
+  //     background-image: url(../images/icons/tel-dark-hov.svg);
+  //   }
+  // }
+  
+}
+
+.email,
+.mail {
+  &::before {
+    background-image: url(../images/icons/mail.svg);
+  }
+  // &:hover{
+  //   &::before{
+  //     background-image: url(../images/icons/mail-dark-hov.svg);
+  //   }
+  // }
+ 
+}
+
+
+.hamburger {
+  margin-right: 0px;
+  width: 34px;
+  height: 34px;
+
+  cursor: pointer;
+  @include trans(0.3s);
+  display: block;
+  position: relative;
+  overflow: hidden;
+  display: none;
+  padding: 5px;
+
+  &:hover,
+  &:focus,
+  &:active {
+    .hold {
+      &::before {
+        width: 70%;
+        background-color: $color-secondary;
+      }
+
+      div {
+        background-color: $color-secondary;
+      }
+
+      &::after {
+        width: 70%;
+        background-color: $color-secondary;
+      }
+    }
+  }
+
+  .hold {
+    height: 2px;
+    width: calc(100% - 5px);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &:before {
+      top: -6px;
+    }
+
+    &:after {
+      bottom: -6px;
+    }
+
+    &:before,
+    &:after {
+      @include trans(0.3s);
+      content: "";
+      position: absolute;
+      display: block;
+      width: 100%;
+      height: 2px;
+      left: 0px;
+      background-color: $color-secondary;
+    }
+
+    div {
+      @include trans(0.25s);
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background-color: $color-secondary;
+    }
+  }
+}
+
+.close {
+  @include trans(0.3s);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  right: 0px;
+  top: 100px;
+  cursor: pointer;
+  z-index: 15;
+
+  &.small {
+    height: 12px;
+    width: 12px;
+    top: 10px;
+    right: 10px;
+
+    &::before,
+    &::after {
+      height: 2px;
+      background-color: $color-secondary;
+    }
+  }
+
+  &::before,
+  &::after {
+    @include trans(0.3s);
+    content: "";
+    height: 3px;
+    width: 100%;
+    position: absolute;
+    border-radius: 10px;
+    background-color: $color-primary;
+  }
+
+  &::before {
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    @include trans(0.3s);
+
+    &::before {
+      transform: rotate(-45deg);
+    }
+
+    &::after {
+      transform: rotate(45deg);
+    }
+  }
+}
+.swiper-button-prev,
+.swiper-button-next {
+  @include trans(0.3s);
+  // border: 1px solid $color-accent;
+  width: 40px;
+  height: 40px;
+  display: block;
+  position: absolute;
+  margin: 0;
+  overflow: hidden;
+  background-color: $color-font;
+  // border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+
+  @include hover {
+    background-color: $color-primary;
+  }
+  &.white {
+    background-color: $color-font-invert;
+    @include hover {
+      background-color: $color-primary;
+      &::after {
+        background-image: url(../images/icons/arrow-right-white.svg);
+      }
+    }
+    &:after {
+      background-image: url(../images/icons/arrow-right-black.svg);
+    }
+  }
+  &::after {
+    @include trans(0.3s);
+    content: "";
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 28px;
+    height: 28px;
+    display: inline-block;
+    position: absolute;
+    background: url(../images/icons/arrow-right-white.svg) no-repeat center
+      center;
+    background-size: cover;
+  }
+
+  &::before {
+    content: "";
+    display: none;
+  }
+  &.swiper-button-lock {
+    display: none;
+  }
+  &.swiper-button-disabled {
+    background-color: rgba($color: $color-font-second, $alpha: 0.5);
+    opacity: 1;
+  }
+  &.medium {
+    width: 38px;
+    height: 38px;
+    &::before,
+    &::after {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  
+}
+
+.swiper-button-prev {
+  &::after {
+    transform: translate(-50%, -50%) rotate(180deg);
+  }
+
+  &.negative-top {
+    top: unset;
+    bottom: calc(100% + 56px);
+    left: unset;
+    margin: unset;
+    right: 64px;
+
+    &.big {
+      bottom: calc(100% + 72px);
+    }
+  }
+}
+.swiper-pagination {
+  position: relative !important;
+  top: unset !important;
+  left: unset !important;
+  bottom: unset !important;
+  margin: 16px 0 0 0;
+  right: unset !important;
+  width: unset !important;
+  margin-right: auto;
+
+  .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    // background-color: #cccccc;
+    background-color: $white-20;
+    opacity: 1;
+    cursor: pointer;
+    &.swiper-pagination-bullet-active{
+      background-color: $color-secondary;
+    }
+  }
+}

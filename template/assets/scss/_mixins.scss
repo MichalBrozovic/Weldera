@@ -1,0 +1,220 @@
+@use "sass:map";
+
+@mixin box-sizing($value) {
+  -webkit-box-sizing: $value;
+  -moz-box-sizing: $value;
+  box-sizing: $value;
+}
+
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content: "";
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+@mixin responsive-container-padding {
+  padding-left: $container-padding !important;
+  padding-right: $container-padding !important;
+
+  // Tablet breakpoint (lícujeme s tvým zadáním 1124px)
+  @media screen and (max-width: 1124px) {
+    padding-left: $container-padding-tablet !important;
+    padding-right: $container-padding-tablet !important;
+  }
+
+  // Mobile breakpoint
+  @media screen and (max-width: 767px) {
+    padding-left: $container-padding-mobile !important;
+    padding-right: $container-padding-mobile !important;
+  }
+}
+
+// 3. Hlavní Container Mixin
+@mixin container($max-width: $container-width) {
+  width: 100%;
+  margin: 0 auto;
+  max-width: calc($max-width + ($container-padding * 2)) !important;
+  zoom: 1;
+  @include box-sizing(border-box);
+  @include clearfix;
+  @include responsive-container-padding;
+}
+
+@mixin trans($t) {
+  -webkit-transition: all $t ease-in-out;
+  -moz-transition: all $t ease-in-out;
+  -o-transition: all $t ease-in-out;
+  transition: all $t ease-in-out;
+}
+
+@mixin hover {
+  &:hover,
+  &:focus,
+  &:active,
+  &:focus-visible,
+  &:focus-within {
+    @content;
+  }
+}
+
+@function em($size, $context: $text-rem) {
+  @return calc(($size / $context) * 1em);
+}
+
+@function rem($size, $context: $text-rem) {
+  @return calc(($size / $context) * 1rem);
+}
+
+@mixin inherit() {
+  font-size: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+  line-height: inherit;
+  font-family: inherit;
+  color: inherit;
+  text-transform: inherit;
+  transition: inherit;
+}
+
+@mixin underline-mid($bg-color: $color-font, $height: 1px, $bottom: 0) {
+  position: relative;
+  @include trans(0.3s);
+
+  @include hover {
+    &::before {
+      transform: scale(1, 1);
+    }
+  }
+
+  &::before {
+    @include trans(0.3s);
+    content: "";
+    left: 0;
+    top: unset;
+    bottom: $bottom;
+    width: 100%;
+    height: $height;
+    display: block;
+    background-color: $bg-color;
+    position: absolute;
+    transform: scale(0, 1);
+  }
+}
+
+@mixin underline-mid-reverse($bg-color: $color-font, $height: 1px, $bottom: 0) {
+  position: relative;
+  @include trans(0.3s);
+
+  @include hover {
+    &::before {
+      transform: scale(0, 1);
+    }
+  }
+
+  &::before {
+    @include trans(0.3s);
+    content: "";
+    left: 0;
+    top: unset;
+    // left: unset;
+    bottom: $bottom;
+    width: 100%;
+    height: $height;
+    display: block;
+    background-color: $bg-color;
+    position: absolute;
+    transform: scale(1, 1);
+  }
+}
+@mixin underline-left($bg-color: $color-font, $height: 1px, $bottom: 0) {
+  position: relative;
+  @include trans(0.3s);
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    &::before {
+      width: 100%;
+    }
+  }
+
+  &::before {
+    @include trans(0.3s);
+    content: "";
+    left: 0;
+    top: unset;
+    bottom: $bottom;
+    width: 0;
+    height: $height;
+    display: block;
+    background-color: $bg-color;
+    position: absolute;
+  }
+}
+@mixin icon-mask($url, $color: $color-primary, $width: 16px, $height: 16px) {
+  width: $width;
+  height: $height;
+  display: inline-block; // nebo inline-block podle potřeby
+
+  background-color: $color;
+
+  -webkit-mask-image: url($url);
+  mask-image: url($url);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+
+  @include trans(0.3s); // Tvoje tranzice pro plynulé změny barev
+}
+
+@mixin apply-typography($key) {
+  // Místo map-get používáme map.get
+  $data: map.get($typography-map, $key);
+  $d: map.get($data, "d");
+  $m: map.get($data, "m");
+  $t: calc(($d + $m) / 2);
+
+  // Desktop
+  font-size: rem($d);
+  line-height: em($d * 1.2, $d);
+
+  // Tablet
+  @media screen and (max-width: 1023px) and (min-width: 768px) {
+    font-size: rem($t);
+    line-height: em($t * 1.2, $t);
+  }
+
+  // Mobile
+  @media screen and (max-width: 767px) {
+    font-size: rem($m);
+    line-height: em($m * 1.2, $m);
+  }
+}
+
+@mixin position-relative() {
+  position: relative;
+  top: unset !important;
+  left: unset !important;
+  right: unset !important;
+  bottom: unset !important;
+}
+
+@mixin glass-effect {
+/* From https://css.glass */
+background: rgba(255, 255, 255, 0.3);
+box-shadow: 0 4px 30px rgba(255, 255, 255, 0.1);
+backdrop-filter: blur(8px);
+-webkit-backdrop-filter: blur(8px);
+border: 1px solid rgba(255, 255, 255, 0.35);
+color: $color-font-invert;
+}
