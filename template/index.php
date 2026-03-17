@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="right">
-                    <img src="assets/images/photos/DSC_4591.webp" alt="BM Beta - Strojní výroba a kovoobrábění" />
+                    <img src="assets/images/photos/DSC_4591.webp" alt="BM Beta - Strojní výroba a kovoobrábění" loading="eager" fetchpriority="high"/>
                 </div>
             </div>
         </div>

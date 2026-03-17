@@ -10,10 +10,6 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-    <link rel="preload" href="assets/fonts/montserrat/Montserrat-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-    <link rel="preload" href="assets/fonts/montserrat/Montserrat-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-
-    <link rel="preload" href="assets/fonts/Inter/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 
 
     <link rel="preload" href="assets/css/critical.min.css" as="style">
@@ -32,6 +28,8 @@
     <link rel="shortcut icon" href="assets/images/favicon/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
     <link rel="manifest" href="assets/images/favicon/site.webmanifest" />
+
+    <link rel="preload" as="image" href="assets/images/photos/DSC_4591.webp" type="image/webp" fetchpriority="high">
 </head>
 
 <body class="" id="body">
